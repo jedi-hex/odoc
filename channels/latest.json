@@ -1,6 +1,36 @@
 {
   "schemaVersion": 1,
   "release": null,
-  "alpha": null,
-  "history": []
+  "alpha": {
+    "channel": "alpha",
+    "version": "1.0.0-alpha.2",
+    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.2/latest.json",
+    "pubDate": "2026-08-11T09:50:24.723Z",
+    "notes": "# V1.0.0-alpha.2\n\n## Fixed\n\n- 修复应用长时间运行后弹出且无法关闭的登录框：匿名登录令牌过期后改为后台自动重新鉴权并重放原请求，用户无感知。\n- 鉴权失败时的后台轮询改为退避重试，不再持续刷屏错误提示。\n\n## Changed\n\n- 公开发布与自动更新的承载仓库迁移至 `jedi-hex/odoc`。",
+    "platforms": [
+      "darwin-aarch64",
+      "darwin-aarch64-app",
+      "darwin-x86_64",
+      "darwin-x86_64-app",
+      "windows-x86_64",
+      "windows-x86_64-nsis"
+    ]
+  },
+  "history": [
+    {
+      "channel": "alpha",
+      "version": "1.0.0-alpha.2",
+      "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.2/latest.json",
+      "pubDate": "2026-08-11T09:50:24.723Z",
+      "notes": "# V1.0.0-alpha.2\n\n## Fixed\n\n- 修复应用长时间运行后弹出且无法关闭的登录框：匿名登录令牌过期后改为后台自动重新鉴权并重放原请求，用户无感知。\n- 鉴权失败时的后台轮询改为退避重试，不再持续刷屏错误提示。\n\n## Changed\n\n- 公开发布与自动更新的承载仓库迁移至 `jedi-hex/odoc`。",
+      "platforms": [
+        "darwin-aarch64",
+        "darwin-aarch64-app",
+        "darwin-x86_64",
+        "darwin-x86_64-app",
+        "windows-x86_64",
+        "windows-x86_64-nsis"
+      ]
+    }
+  ]
 }
