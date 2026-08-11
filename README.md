@@ -10,6 +10,11 @@ Installers for macOS (x64 / arm64) and Windows (x64) are published on the
 [Releases](https://github.com/jedi-hex/odoc/releases) page. Published tags and
 assets are never overwritten.
 
+**macOS**: builds are not yet signed or notarized, so macOS reports the app as
+damaged on first launch. After moving it to Applications, run
+`xattr -cr /Applications/ODOC.AI.app` once, then open it normally. See
+[SUPPORT.md](SUPPORT.md) for details.
+
 ## Update channels
 
 The app has two channels:
