@@ -1,0 +1,33 @@
+name: Update failure
+description: Report an updater check, download, signature or install failure
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Current version and update channel
+    validations:
+      required: true
+  - type: input
+    id: system
+    attributes:
+      label: Operating system
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Failed stage
+      options:
+        - Check
+        - Download
+        - Signature verification
+        - Install or restart
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted update diagnostics
+      description: Remove tokens and local paths before submitting.
+    validations:
+      required: true
