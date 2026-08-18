@@ -3,10 +3,10 @@
   "release": null,
   "alpha": {
     "channel": "alpha",
-    "version": "1.0.0-alpha.2",
-    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.2/latest.json",
-    "pubDate": "2026-08-11T09:50:24.723Z",
-    "notes": "# V1.0.0-alpha.2\n\n## Fixed\n\n- 修复应用长时间运行后弹出且无法关闭的登录框：匿名登录令牌过期后改为后台自动重新鉴权并重放原请求，用户无感知。\n- 鉴权失败时的后台轮询改为退避重试，不再持续刷屏错误提示。\n\n## Changed\n\n- 公开发布与自动更新的承载仓库迁移至 `jedi-hex/odoc`。",
+    "version": "1.0.0-alpha.3",
+    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.3/latest.json",
+    "pubDate": "2026-08-18T06:33:02.178Z",
+    "notes": "# 1.0.0-alpha.3\n\n## Added\n\n- 输入框支持直接粘贴图片：用任意截图工具截好后 `Ctrl+V` 即可发给 Agent，不再依赖打开 PDF。\n- 模型选择器按连接分组选择具体模型，随时可切换，并显示该模型的能力标签（文本 / 视觉）。\n- 缺失原文件的文献可原地重新关联 PDF，保留原有记录与元数据。\n\n## Improved\n\n- 模型能力改由服务端逐个模型配置并随清单下发，客户端不再按模型名推断，新模型上线即刻准确。\n- 向量嵌入、重排等非对话模型不再出现在对话模型选择器中，避免选中后任务必然失败。\n- 模型的最大输出长度改由服务端配置决定。\n- 连接配置精简为「只填必要字段」：内置连接只需 API Key，模型与能力参数不再需要手工填写。\n- 划词翻译与全文翻译改为实时获取模型清单，可随时切换模型。\n\n## Fixed\n\n- 修复切换模型后提问显示在回答下方的顺序错乱。\n- 修复配置了支持视觉的模型仍无法使用截图的问题。\n- 修复首次安装启动白屏或黑屏卡住。\n- 修复卸载后后台进程未退出的问题。\n- 修复切换模型后丢失对话上下文，以及同一连接内换模型后请求仍打向旧模型。\n- 修复全文翻译遇到网络异常时弹出登录框。\n- 修复导入含缺失 PDF 的压缩包后，点击文献报错 999 并跳转。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.3-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.3` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.3` (dependency)\n- Jin-up/newapi @ `V1.0.0-alpha.3` (dependency)\n- yb2020/go-sea-proto @ `v0.0.151` (dependency)\n\n## Known issues\n\n- 升级前在连接配置里选定的模型不再生效：模型改为每次使用时选择。原有连接与 API Key 完整保留，在输入区或翻译卡片重新选择一次模型即可继续使用。\n- 非对话模型的过滤逻辑尚未在实际配置该类模型的环境下验证。\n\n## Delivery traceability\n\n- V1.0.0-alpha.3 - 模型连接收敛、全文翻译匿名自愈与文献恢复 (HTML r14, `1f7e4a56d7bcf160d1084e59aae4bd309b4b69e64a8f9b118b3e591600efb400`, prd_draft)",
     "platforms": [
       "darwin-aarch64",
       "darwin-aarch64-app",
@@ -17,6 +17,21 @@
     ]
   },
   "history": [
+    {
+      "channel": "alpha",
+      "version": "1.0.0-alpha.3",
+      "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.3/latest.json",
+      "pubDate": "2026-08-18T06:33:02.178Z",
+      "notes": "# 1.0.0-alpha.3\n\n## Added\n\n- 输入框支持直接粘贴图片：用任意截图工具截好后 `Ctrl+V` 即可发给 Agent，不再依赖打开 PDF。\n- 模型选择器按连接分组选择具体模型，随时可切换，并显示该模型的能力标签（文本 / 视觉）。\n- 缺失原文件的文献可原地重新关联 PDF，保留原有记录与元数据。\n\n## Improved\n\n- 模型能力改由服务端逐个模型配置并随清单下发，客户端不再按模型名推断，新模型上线即刻准确。\n- 向量嵌入、重排等非对话模型不再出现在对话模型选择器中，避免选中后任务必然失败。\n- 模型的最大输出长度改由服务端配置决定。\n- 连接配置精简为「只填必要字段」：内置连接只需 API Key，模型与能力参数不再需要手工填写。\n- 划词翻译与全文翻译改为实时获取模型清单，可随时切换模型。\n\n## Fixed\n\n- 修复切换模型后提问显示在回答下方的顺序错乱。\n- 修复配置了支持视觉的模型仍无法使用截图的问题。\n- 修复首次安装启动白屏或黑屏卡住。\n- 修复卸载后后台进程未退出的问题。\n- 修复切换模型后丢失对话上下文，以及同一连接内换模型后请求仍打向旧模型。\n- 修复全文翻译遇到网络异常时弹出登录框。\n- 修复导入含缺失 PDF 的压缩包后，点击文献报错 999 并跳转。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.3-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.3` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.3` (dependency)\n- Jin-up/newapi @ `V1.0.0-alpha.3` (dependency)\n- yb2020/go-sea-proto @ `v0.0.151` (dependency)\n\n## Known issues\n\n- 升级前在连接配置里选定的模型不再生效：模型改为每次使用时选择。原有连接与 API Key 完整保留，在输入区或翻译卡片重新选择一次模型即可继续使用。\n- 非对话模型的过滤逻辑尚未在实际配置该类模型的环境下验证。\n\n## Delivery traceability\n\n- V1.0.0-alpha.3 - 模型连接收敛、全文翻译匿名自愈与文献恢复 (HTML r14, `1f7e4a56d7bcf160d1084e59aae4bd309b4b69e64a8f9b118b3e591600efb400`, prd_draft)",
+      "platforms": [
+        "darwin-aarch64",
+        "darwin-aarch64-app",
+        "darwin-x86_64",
+        "darwin-x86_64-app",
+        "windows-x86_64",
+        "windows-x86_64-nsis"
+      ]
+    },
     {
       "channel": "alpha",
       "version": "1.0.0-alpha.2",
