@@ -3,10 +3,10 @@
   "release": null,
   "alpha": {
     "channel": "alpha",
-    "version": "1.0.0-alpha.3",
-    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.3/latest.json",
-    "pubDate": "2026-08-18T06:33:02.178Z",
-    "notes": "# 1.0.0-alpha.3\n\n## Added\n\n- 输入框支持直接粘贴图片：用任意截图工具截好后 `Ctrl+V` 即可发给 Agent，不再依赖打开 PDF。\n- 模型选择器按连接分组选择具体模型，随时可切换，并显示该模型的能力标签（文本 / 视觉）。\n- 缺失原文件的文献可原地重新关联 PDF，保留原有记录与元数据。\n\n## Improved\n\n- 模型能力改由服务端逐个模型配置并随清单下发，客户端不再按模型名推断，新模型上线即刻准确。\n- 向量嵌入、重排等非对话模型不再出现在对话模型选择器中，避免选中后任务必然失败。\n- 模型的最大输出长度改由服务端配置决定。\n- 连接配置精简为「只填必要字段」：内置连接只需 API Key，模型与能力参数不再需要手工填写。\n- 划词翻译与全文翻译改为实时获取模型清单，可随时切换模型。\n\n## Fixed\n\n- 修复切换模型后提问显示在回答下方的顺序错乱。\n- 修复配置了支持视觉的模型仍无法使用截图的问题。\n- 修复首次安装启动白屏或黑屏卡住。\n- 修复卸载后后台进程未退出的问题。\n- 修复切换模型后丢失对话上下文，以及同一连接内换模型后请求仍打向旧模型。\n- 修复全文翻译遇到网络异常时弹出登录框。\n- 修复导入含缺失 PDF 的压缩包后，点击文献报错 999 并跳转。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.3-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.3` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.3` (dependency)\n- Jin-up/newapi @ `V1.0.0-alpha.3` (dependency)\n- yb2020/go-sea-proto @ `v0.0.151` (dependency)\n\n## Known issues\n\n- 升级前在连接配置里选定的模型不再生效：模型改为每次使用时选择。原有连接与 API Key 完整保留，在输入区或翻译卡片重新选择一次模型即可继续使用。\n- 非对话模型的过滤逻辑尚未在实际配置该类模型的环境下验证。\n\n## Delivery traceability\n\n- V1.0.0-alpha.3 - 模型连接收敛、全文翻译匿名自愈与文献恢复 (HTML r14, `1f7e4a56d7bcf160d1084e59aae4bd309b4b69e64a8f9b118b3e591600efb400`, prd_draft)",
+    "version": "1.0.0-alpha.4",
+    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.4/latest.json",
+    "pubDate": "2026-08-21T07:27:58.125Z",
+    "notes": "# 1.0.0-alpha.4\n\n本版本集中修复 alpha.3 发布后暴露的可用性缺陷，不含新功能。\n\n## Added\n\n- 外部连接可接入任意 OpenAI 兼容端点：填入 Base URL 即可取得模型清单并对话，支持本地 Ollama、vLLM 及各类兼容中转，凭据只保存在本机。\n\n## Improved\n\n- Windows 安装包内随附 POSIX shell 与常用工具，未安装 Git for Windows 的机器装完即可使用 Agent，不再需要为读论文额外安装开发工具。\n- 图片在附加进输入框之前完成体积估算（计入对话历史中已有的图片），超限时直接拒绝并给出可执行提示，不再等到请求失败才报错。\n- 模型最大输出长度配置异常时客户端自动纠偏为可用值，并记录诊断日志便于发现错误配置。\n- 数据导入出现部分失败时如实上报并给出数量，不再表现为完全成功。\n\n## Fixed\n\n- 修复未安装 Git for Windows 的 Windows 机器上 Agent 完全无响应。底层需要的是一个 POSIX shell，缺失时进程直接退出而非降级，用户只看到一条提示后再无反应。\n- 修复接入部分 OpenAI 兼容端点时回答被截断，只显示开头几个字。\n- 修复贴入多张图片后请求失败且不说明原因。\n- 修复模型输出长度被配置成过小值时回答被截断，并提示用户去设置一个他无处可设的环境变量。\n- 修复窗口缩至极窄宽度时模型配置页的控件与文本挤压错乱。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.4-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.4` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.4` (dependency)\n\n## Known issues\n\n- ZIP 导入的端到端复验延至 V1.0.0-alpha.5。本次收到的「导入后分类丢失」反馈，经查证为外部平台迁移包自身的数据缺失（导出包内分类为空、文献与文件夹的归属关系未随迁移写入），非 ODOC 导入逻辑问题；相关迁移工具的修复另行安排。\n- macOS 用户若误装 Intel 版本，应用可正常启动但 Agent 静默不可用，且自动更新会持续推送 Intel 版本。Apple 芯片机器请下载 Apple Silicon 版本。\n\n## Delivery traceability\n\n- V1.0.0-alpha.4 - 可用性缺陷收口 (HTML r6, `00578e40b70ad5d0ee7e55ed9fcfa4cfbdfdc7a31db6e74072cd121eadabc8df`, accepted)",
     "platforms": [
       "darwin-aarch64",
       "darwin-aarch64-app",
@@ -17,6 +17,21 @@
     ]
   },
   "history": [
+    {
+      "channel": "alpha",
+      "version": "1.0.0-alpha.4",
+      "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.4/latest.json",
+      "pubDate": "2026-08-21T07:27:58.125Z",
+      "notes": "# 1.0.0-alpha.4\n\n本版本集中修复 alpha.3 发布后暴露的可用性缺陷，不含新功能。\n\n## Added\n\n- 外部连接可接入任意 OpenAI 兼容端点：填入 Base URL 即可取得模型清单并对话，支持本地 Ollama、vLLM 及各类兼容中转，凭据只保存在本机。\n\n## Improved\n\n- Windows 安装包内随附 POSIX shell 与常用工具，未安装 Git for Windows 的机器装完即可使用 Agent，不再需要为读论文额外安装开发工具。\n- 图片在附加进输入框之前完成体积估算（计入对话历史中已有的图片），超限时直接拒绝并给出可执行提示，不再等到请求失败才报错。\n- 模型最大输出长度配置异常时客户端自动纠偏为可用值，并记录诊断日志便于发现错误配置。\n- 数据导入出现部分失败时如实上报并给出数量，不再表现为完全成功。\n\n## Fixed\n\n- 修复未安装 Git for Windows 的 Windows 机器上 Agent 完全无响应。底层需要的是一个 POSIX shell，缺失时进程直接退出而非降级，用户只看到一条提示后再无反应。\n- 修复接入部分 OpenAI 兼容端点时回答被截断，只显示开头几个字。\n- 修复贴入多张图片后请求失败且不说明原因。\n- 修复模型输出长度被配置成过小值时回答被截断，并提示用户去设置一个他无处可设的环境变量。\n- 修复窗口缩至极窄宽度时模型配置页的控件与文本挤压错乱。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.4-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.4` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.4` (dependency)\n\n## Known issues\n\n- ZIP 导入的端到端复验延至 V1.0.0-alpha.5。本次收到的「导入后分类丢失」反馈，经查证为外部平台迁移包自身的数据缺失（导出包内分类为空、文献与文件夹的归属关系未随迁移写入），非 ODOC 导入逻辑问题；相关迁移工具的修复另行安排。\n- macOS 用户若误装 Intel 版本，应用可正常启动但 Agent 静默不可用，且自动更新会持续推送 Intel 版本。Apple 芯片机器请下载 Apple Silicon 版本。\n\n## Delivery traceability\n\n- V1.0.0-alpha.4 - 可用性缺陷收口 (HTML r6, `00578e40b70ad5d0ee7e55ed9fcfa4cfbdfdc7a31db6e74072cd121eadabc8df`, accepted)",
+      "platforms": [
+        "darwin-aarch64",
+        "darwin-aarch64-app",
+        "darwin-x86_64",
+        "darwin-x86_64-app",
+        "windows-x86_64",
+        "windows-x86_64-nsis"
+      ]
+    },
     {
       "channel": "alpha",
       "version": "1.0.0-alpha.3",
