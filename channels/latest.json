@@ -3,10 +3,10 @@
   "release": null,
   "alpha": {
     "channel": "alpha",
-    "version": "1.0.0-alpha.4",
-    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.4/latest.json",
-    "pubDate": "2026-08-21T07:27:58.125Z",
-    "notes": "# 1.0.0-alpha.4\n\n本版本集中修复 alpha.3 发布后暴露的可用性缺陷，不含新功能。\n\n## Added\n\n- 外部连接可接入任意 OpenAI 兼容端点：填入 Base URL 即可取得模型清单并对话，支持本地 Ollama、vLLM 及各类兼容中转，凭据只保存在本机。\n\n## Improved\n\n- Windows 安装包内随附 POSIX shell 与常用工具，未安装 Git for Windows 的机器装完即可使用 Agent，不再需要为读论文额外安装开发工具。\n- 图片在附加进输入框之前完成体积估算（计入对话历史中已有的图片），超限时直接拒绝并给出可执行提示，不再等到请求失败才报错。\n- 模型最大输出长度配置异常时客户端自动纠偏为可用值，并记录诊断日志便于发现错误配置。\n- 数据导入出现部分失败时如实上报并给出数量，不再表现为完全成功。\n\n## Fixed\n\n- 修复未安装 Git for Windows 的 Windows 机器上 Agent 完全无响应。底层需要的是一个 POSIX shell，缺失时进程直接退出而非降级，用户只看到一条提示后再无反应。\n- 修复接入部分 OpenAI 兼容端点时回答被截断，只显示开头几个字。\n- 修复贴入多张图片后请求失败且不说明原因。\n- 修复模型输出长度被配置成过小值时回答被截断，并提示用户去设置一个他无处可设的环境变量。\n- 修复窗口缩至极窄宽度时模型配置页的控件与文本挤压错乱。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.4-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.4` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.4` (dependency)\n\n## Known issues\n\n- ZIP 导入的端到端复验延至 V1.0.0-alpha.5。本次收到的「导入后分类丢失」反馈，经查证为外部平台迁移包自身的数据缺失（导出包内分类为空、文献与文件夹的归属关系未随迁移写入），非 ODOC 导入逻辑问题；相关迁移工具的修复另行安排。\n- macOS 用户若误装 Intel 版本，应用可正常启动但 Agent 静默不可用，且自动更新会持续推送 Intel 版本。Apple 芯片机器请下载 Apple Silicon 版本。\n\n## Delivery traceability\n\n- V1.0.0-alpha.4 - 可用性缺陷收口 (HTML r6, `00578e40b70ad5d0ee7e55ed9fcfa4cfbdfdc7a31db6e74072cd121eadabc8df`, accepted)",
+    "version": "1.0.0-alpha.5",
+    "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.5/latest.json",
+    "pubDate": "2026-08-27T03:57:35.763Z",
+    "notes": "# 1.0.0-alpha.5\n\n本版本放开「生成中继续提问」，并修复 alpha.4 发布后暴露的一组图片能力缺陷。\n\n## Added\n\n- Agent 生成或执行任务期间不再禁用输入框：直接发送即可，消息进入队列。当前轮有工具调用时会被即时注入、模型当场看到并调整后续步骤；本轮没有工具调用则顺延到轮次结束后执行。已生成的内容不受影响。\n\n## Improved\n\n- 模型的图片能力改为只认服务端逐个模型下发的声明，不再按模型名推断。未声明一律视为未知并放行，外部 OpenAI 兼容端点不会再因为模型名不在内置清单里而失去截图能力。\n- 点击停止回答会一次清空全部待处理消息，客户端与运行时队列同时清空，被清空的消息不再执行。\n\n## Fixed\n\n- 修复截图翻译对已支持图片的模型误报「当前模型不支持图片」。原因是判断读的是连接上保存的能力标记，而模型早已改为每次请求单独选择，那个标记与本次模型无关。\n- 修复在模型下拉里选一次模型就会把解析出的能力回写成明确声明，使上一条缺陷在切换模型后重新出现。\n- 修复先用支持图片的模型发送过图片、再切换到不支持图片的模型后，此后每一次提问都被上游拒绝且无法恢复。现在切换前会告知并让你选择新建上下文，界面中的历史记录保留。\n- 升级时清除历史配置中「模型名为空却带明确图片能力声明」的记录，无需重新保存连接即可恢复截图翻译。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.5-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.5` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.5` (dependency)\n\n## Known issues\n\n- 排队中的消息不单独标注「待处理」，也不支持逐条撤销。运行时在轮内注入消息时不产生对应信号，客户端无法准确区分「仍在排队」与「已被注入」，标注必然出错。需要撤回时可用停止回答一次清空全部待处理消息。\n- 切换模型后曾出现一次连接失败（`Connection error. (ConnectionRefused)`），随后相同操作恢复正常，原因未能确定，也未再复现。已补上配置下发失败的日志，便于再次出现时定位。\n\n## Delivery traceability\n\n- V1.0.0-alpha.5 - 生成中继续提问：消息排队与打断 (HTML r4, `6fbc998014e1151fb6aac5350099cffaa2e00f683ce4403664e67c1bb023daea`, prd_draft)",
     "platforms": [
       "darwin-aarch64",
       "darwin-aarch64-app",
@@ -17,6 +17,21 @@
     ]
   },
   "history": [
+    {
+      "channel": "alpha",
+      "version": "1.0.0-alpha.5",
+      "endpoint": "https://github.com/jedi-hex/odoc/releases/download/v1.0.0-alpha.5/latest.json",
+      "pubDate": "2026-08-27T03:57:35.763Z",
+      "notes": "# 1.0.0-alpha.5\n\n本版本放开「生成中继续提问」，并修复 alpha.4 发布后暴露的一组图片能力缺陷。\n\n## Added\n\n- Agent 生成或执行任务期间不再禁用输入框：直接发送即可，消息进入队列。当前轮有工具调用时会被即时注入、模型当场看到并调整后续步骤；本轮没有工具调用则顺延到轮次结束后执行。已生成的内容不受影响。\n\n## Improved\n\n- 模型的图片能力改为只认服务端逐个模型下发的声明，不再按模型名推断。未声明一律视为未知并放行，外部 OpenAI 兼容端点不会再因为模型名不在内置清单里而失去截图能力。\n- 点击停止回答会一次清空全部待处理消息，客户端与运行时队列同时清空，被清空的消息不再执行。\n\n## Fixed\n\n- 修复截图翻译对已支持图片的模型误报「当前模型不支持图片」。原因是判断读的是连接上保存的能力标记，而模型早已改为每次请求单独选择，那个标记与本次模型无关。\n- 修复在模型下拉里选一次模型就会把解析出的能力回写成明确声明，使上一条缺陷在切换模型后重新出现。\n- 修复先用支持图片的模型发送过图片、再切换到不支持图片的模型后，此后每一次提问都被上游拒绝且无法恢复。现在切换前会告知并让你选择新建上下文，界面中的历史记录保留。\n- 升级时清除历史配置中「模型名为空却带明确图片能力声明」的记录，无需重新保存连接即可恢复截图翻译。\n\n## Compatibility\n\n- yb2020/go-sea-web @ `v1.0.0-alpha.5-tauri` (source)\n- yb2020/go-sea @ `V1.0.0-alpha.5` (dependency)\n- Jin-up/claude-code-myself @ `V1.0.0-alpha.5` (dependency)\n\n## Known issues\n\n- 排队中的消息不单独标注「待处理」，也不支持逐条撤销。运行时在轮内注入消息时不产生对应信号，客户端无法准确区分「仍在排队」与「已被注入」，标注必然出错。需要撤回时可用停止回答一次清空全部待处理消息。\n- 切换模型后曾出现一次连接失败（`Connection error. (ConnectionRefused)`），随后相同操作恢复正常，原因未能确定，也未再复现。已补上配置下发失败的日志，便于再次出现时定位。\n\n## Delivery traceability\n\n- V1.0.0-alpha.5 - 生成中继续提问：消息排队与打断 (HTML r4, `6fbc998014e1151fb6aac5350099cffaa2e00f683ce4403664e67c1bb023daea`, prd_draft)",
+      "platforms": [
+        "darwin-aarch64",
+        "darwin-aarch64-app",
+        "darwin-x86_64",
+        "darwin-x86_64-app",
+        "windows-x86_64",
+        "windows-x86_64-nsis"
+      ]
+    },
     {
       "channel": "alpha",
       "version": "1.0.0-alpha.4",
